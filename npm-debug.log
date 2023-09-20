@@ -1,0 +1,26 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/cael/.nvm/versions/io.js/v3.3.1/bin/iojs',
+1 verbose cli   '/home/cael/.nvm/versions/io.js/v3.3.1/bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'dev' ]
+2 info using npm@2.14.3
+3 info using node@v3.3.1
+4 verbose config Skipping project config: /home/cael/.npmrc. (matches userconfig)
+5 verbose stack Error: missing script: dev
+5 verbose stack     at run (/home/cael/.nvm/versions/io.js/v3.3.1/lib/node_modules/npm/lib/run-script.js:142:19)
+5 verbose stack     at /home/cael/.nvm/versions/io.js/v3.3.1/lib/node_modules/npm/lib/run-script.js:58:5
+5 verbose stack     at /home/cael/.nvm/versions/io.js/v3.3.1/lib/node_modules/npm/node_modules/read-package-json/read-json.js:345:5
+5 verbose stack     at checkBinReferences_ (/home/cael/.nvm/versions/io.js/v3.3.1/lib/node_modules/npm/node_modules/read-package-json/read-json.js:309:45)
+5 verbose stack     at final (/home/cael/.nvm/versions/io.js/v3.3.1/lib/node_modules/npm/node_modules/read-package-json/read-json.js:343:3)
+5 verbose stack     at then (/home/cael/.nvm/versions/io.js/v3.3.1/lib/node_modules/npm/node_modules/read-package-json/read-json.js:113:5)
+5 verbose stack     at ReadFileContext.callback (/home/cael/.nvm/versions/io.js/v3.3.1/lib/node_modules/npm/node_modules/read-package-json/read-json.js:284:20)
+5 verbose stack     at FSReqWrap.readFileAfterOpen [as oncomplete] (evalmachine.<anonymous>:303:13)
+6 verbose cwd /home/cael/Documents/booksApp
+7 error Linux 5.15.0-82-generic
+8 error argv "/home/cael/.nvm/versions/io.js/v3.3.1/bin/iojs" "/home/cael/.nvm/versions/io.js/v3.3.1/bin/npm" "run" "dev"
+9 error node v3.3.1
+10 error npm  v2.14.3
+11 error missing script: dev
+12 error If you need help, you may report this error at:
+12 error     <https://github.com/npm/npm/issues>
+13 verbose exit [ 1, true ]

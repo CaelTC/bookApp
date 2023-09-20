@@ -1,0 +1,18 @@
+nvm install v18.15.0
+
+npm create vite@4.1.0
+
+npm i --save @fortawesome/fontawesome-svg-core
+
+npm i --save @fortawesome/free-solid-svg-icons
+npm i --save @fortawesome/free-regular-svg-icons
+
+npm i --save @fortawesome/react-fontawesome@latest
+
+npm install react-hook-form 
+
+npm install @mui/material @emotion/react @emotion/styled
+
+npm install @mui/x-date-pickers
+
+npm install moment
