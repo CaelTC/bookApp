@@ -7,7 +7,9 @@ export default defineConfig({
     proxy: {
       '/books': 'http://localhost:5000',
       '/add': 'http://localhost:5000',
-      '/delete': 'http://localhost:5000'
+      '/delete': 'http://localhost:5000',
+      '/update' : 'http://localhost:5000',
+      '/book': 'http://localhost:5000',
     }
   }
 })
