@@ -1,15 +1,15 @@
 "use client"
 
 import {Add} from "@mui/icons-material";
-import { Button, IconButton } from "@mui/material";
-import { THIRD_COLOR } from "../helpers/ColorHelpers";
+import { Button, ThemeProvider } from "@mui/material";
+import { SECONDARY_COLOR, buttonTheme } from "../helpers/ColorHelpers";
 
 interface Props {
     handleClick: () => void
 }
 
 function AddButton({handleClick}: Props) {
-  return <Button variant="contained"  startIcon={<Add/>} onClick={handleClick} sx={{alignSelf: "center"}} > New Book</Button>;
+  return <ThemeProvider theme={buttonTheme}><Button variant="contained" color="secondary" startIcon={<Add/>} onClick={handleClick} sx={{alignSelf: "center"}} > New Book</Button></ThemeProvider>;
 }
 
 export default AddButton;

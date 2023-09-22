@@ -1,18 +1,20 @@
 "use client";
 import { AxiosResponse } from "axios";
 
-export function serverDecoder(serverMsg: AxiosResponse) {
-  console.log(serverMsg.data);
-  switch (serverMsg.data[1].action) {
+export function serverDecoder(serverMsg: AxiosResponse): Promise<number> {
+  return new Promise((resolve, reject) =>{
+    switch (serverMsg.data[1].action) {
     case "add":
-      console.log("added");
-
-      break;
+      resolve( serverMsg.data[2].id);
+    case "modifiedTitle":
+      resolve(serverMsg.data[2].id);
+    case "modifiedYear":
+      resolve(serverMsg.data[2].id);
+    case "modifiedLocation":
+      resolve(serverMsg.data[2].id)
     case "delete":
-      console.log("deleted");
-      break;
+      resolve( serverMsg.data[2].id);
     case "failed":
-      console.log("failed");
-      break;
-  }
+      reject("Server failed to do the action");
+  }})
 }

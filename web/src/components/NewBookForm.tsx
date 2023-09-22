@@ -1,84 +1,133 @@
 "use client";
 
-import { TextField, Button, Stack, Switch, DialogContent, DialogContentText, Dialog, DialogTitle, FormControlLabel} from "@mui/material";
+import {
+  TextField,
+  Button,
+  Stack,
+  Switch,
+  DialogContent,
+  Grid,
+  Dialog,
+  DialogTitle,
+  FormControlLabel,
+} from "@mui/material";
 import Moment from "moment";
-import { bookEncoder } from "../communication/Out";
-import { ErrorMessage,  Form, Formik,  FormikState} from "formik";
+import { NewBook } from "../models/Books";
+import { ErrorMessage, Form, Formik, FormikState } from "formik";
 import { DatePicker } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import Axios from "axios";
-import { serverDecoder } from "../communication/In";
-import { PRIMARY_COLOR } from "../helpers/ColorHelpers";
+import AddButton from "./AddButton";
+import { useState } from "react";
 
 type FormValues = {
   title: string;
   year: Moment.Moment;
   isInTheHouse: boolean;
-}
+  owner: string;
+};
 
 type BookFormProps = {
-  open : boolean,
-  close: () => void;
-}
-function BookForm({open, close}: BookFormProps) {
+  addBook: (values: NewBook) => void;
+};
+function BookForm({ addBook }: BookFormProps) {
+  const [open, setOpen] = useState(false);
+
+  const handleAddDialogClose = () => {
+    setOpen(false);
+  };
+
+  const handleAddDialogOpen = () => {
+    setOpen(true);
+  };
   const handleSubmit = (values: FormValues) => {
-    const bookData = bookEncoder(
-      values.title,
-      values.year.toDate().getFullYear(),
-      values.isInTheHouse
-    );
-    const configs = { headers: { "Content-Type": "application/json" } };
-    Axios.post("/add", bookData, configs)
-      .then((res) => serverDecoder(res))
-      .catch((error) => serverDecoder(error));
+    const bookData: NewBook = {
+      title: values.title,
+      year: values.year.toDate().getFullYear(),
+      isInTheHouse: values.isInTheHouse,
+      owner: values.owner,
+    };
+    addBook(bookData);
+    handleAddDialogClose();
   };
   return (
-    <Dialog open={open} onClose={close}>
-      <DialogContent >
-        <DialogTitle>Add new book</DialogTitle>
-      <Formik
-        initialValues={{ title: "", year: Moment(), isInTheHouse: Boolean }}
-        validate={(values) => {
-          const errors = {};
-          if (!values.title) {
-            errors.title = "Required";
-          }
-          return errors;
-        }}
-        onSubmit={(v) => handleSubmit(v)}
-      >
-        {(formik) => (
-          <Form onSubmit={(s) => formik.handleSubmit(s)}>
-            <Stack spacing={2}>
-              <TextField
-                id="title"
-                name="title"
-                label="Title"
-                value={formik.values.title}
-                onChange={formik.handleChange}
-              />
-              <ErrorMessage name="tit</Container>le" />
-              <LocalizationProvider dateAdapter={AdapterMoment}>
-                <DatePicker
-                  label="Year of publication"
-                  views={["year"]}
-                  value={formik.values.year || null}
-                  onChange={(date) => formik.setFieldValue("year", date)}
-                />
-              </LocalizationProvider>
-              <FormControlLabel control={<Switch
-                id="isInTheHouse"
-                value={formik.values.isInTheHouse}
-                onChange={formik.handleChange}
-              />} label="Is in the house"></FormControlLabel>
-            <Button type="submit">Add</Button>
-            </Stack>
-          </Form>
-        )}
-      </Formik>
-      </DialogContent>
-    </Dialog>
+    <>
+      <Grid item xs={12} sm={12} alignContent="center">
+        <AddButton handleClick={handleAddDialogOpen} />
+      </Grid>
+      <Dialog open={open} onClose={handleAddDialogClose}>
+        <DialogContent>
+          <DialogTitle>Add new book</DialogTitle>
+          <Formik
+            initialValues={{
+              title: "",
+              year: Moment(),
+              isInTheHouse: false,
+              owner: "",
+            }}
+            validate={(values) => {
+              const errors = {};
+              if (!values.title) {
+                errors.title = "Required";
+              }
+              if (!values.owner) {
+                errors.owner = "Required";
+              }
+              return errors;
+            }}
+            onSubmit={(v) => handleSubmit(v)}
+          >
+            {(formik) => (
+              <Form onSubmit={(s) => formik.handleSubmit(s)}>
+                <Stack spacing={2}>
+                  <TextField
+                    id="title"
+                    name="title"
+                    label="Title"
+                    value={formik.values.title}
+                    onChange={formik.handleChange}
+                  />
+                  <ErrorMessage name="title" />
+                  <TextField
+                    id="owner"
+                    name="owner"
+                    label="Owner"
+                    value={formik.values.owner}
+                    onChange={formik.handleChange}
+                  />
+                  <ErrorMessage name="owner" />
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <DatePicker
+                      label="Year of publication"
+                      views={["year"]}
+                      value={formik.values.year || null}
+                      onChange={(date) => formik.setFieldValue("year", date)}
+                    />
+                  </LocalizationProvider>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        id="isInTheHouse"
+                        value={formik.values.isInTheHouse}
+                        onChange={formik.handleChange}
+                      />
+                    }
+                    label="Is in the house"
+                  ></FormControlLabel>
+                  <Button variant="outlined" onClick={handleAddDialogClose}>
+                    {" "}
+                    Cancel
+                  </Button>
+                  <Button variant="contained" type="submit">
+                    Add
+                  </Button>
+                </Stack>
+              </Form>
+            )}
+          </Formik>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 
