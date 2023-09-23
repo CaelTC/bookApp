@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import Moment from "moment";
 import { NewBook } from "../models/Books";
-import { ErrorMessage, Form, Formik, FormikState } from "formik";
+import { ErrorMessage, Form, Formik } from "formik";
 import { DatePicker } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -64,16 +64,6 @@ function BookForm({ addBook }: BookFormProps) {
               year: Moment(),
               isInTheHouse: false,
               owner: "",
-            }}
-            validate={(values) => {
-              const errors = {};
-              if (!values.title) {
-                errors.title = "Required";
-              }
-              if (!values.owner) {
-                errors.owner = "Required";
-              }
-              return errors;
             }}
             onSubmit={(v) => handleSubmit(v)}
           >

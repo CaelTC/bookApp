@@ -2,7 +2,7 @@
 
 import {Add} from "@mui/icons-material";
 import { Button, ThemeProvider } from "@mui/material";
-import { SECONDARY_COLOR, buttonTheme } from "../helpers/ColorHelpers";
+import { buttonTheme } from "../helpers/ColorHelpers";
 
 interface Props {
     handleClick: () => void

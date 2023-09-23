@@ -1,7 +1,6 @@
 "use client";
 
 import { Card, CardContent, Typography, CardActions, Collapse, Switch, FormControlLabel } from "@mui/material";
-import { PRIMARY_COLOR, SECONDARY_COLOR, TEXT_COLOR } from "../helpers/ColorHelpers";
 import DeleteButton from "./DeleteButton";
 import { useState } from "react";
 import { BookField } from "../models/Books";
