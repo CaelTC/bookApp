@@ -1,0 +1,44 @@
+version: "3.7"
+services:
+  web:
+    build: web
+    restart: always
+    ports:
+      - 5173:5173
+    networks:
+      - book_network
+  proxy:
+    build: proxy
+    restart: always
+    ports:
+      - 80:80
+    networks:
+      - book_network
+  db:
+    image: postgres:12
+    restart: always
+    ports:
+      - 5432:5432
+    networks:
+      - book_network
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=books
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  server:
+    build: server
+    restart: always
+    ports:
+      - 5000:5000
+    networks:
+      - book_network
+    environment:
+      - ENV=prod
+
+networks:
+  book_network:
+volumes:
+  postgres_data:

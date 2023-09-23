@@ -1,10 +1,8 @@
 "use client";
 
 import DeleteIcon from '@mui/icons-material/Delete';
-import Axios from 'axios';
-import { Book } from "../models/Books";
 import { IconButton } from '@mui/material';
-import { SECONDARY_COLOR, TEXT_COLOR, THIRD_COLOR } from '../helpers/ColorHelpers';
+import {  TEXT_COLOR, THIRD_COLOR } from '../helpers/ColorHelpers';
 
 interface DeleteButtonProps {
     handleDelete: () => void;
