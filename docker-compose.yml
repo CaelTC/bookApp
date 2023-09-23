@@ -2,9 +2,6 @@ version: "3.7"
 services:
   web:
     build: web
-    restart: always
-    ports:
-      - 5173:5173
     networks:
       - book_network
   proxy:
@@ -17,8 +14,6 @@ services:
   db:
     image: postgres:12
     restart: always
-    ports:
-      - 5432:5432
     networks:
       - book_network
     environment:
@@ -28,11 +23,9 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  server:
-    build: server
+  api:
+    build: api
     restart: always
-    ports:
-      - 5000:5000
     networks:
       - book_network
     environment:

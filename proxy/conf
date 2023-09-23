@@ -4,7 +4,5 @@ server {
     location / {
         proxy_pass http://web:5173;
     }
-    location /books {
-        proxy_pass http://server:5000;
-    }
+    
 }
