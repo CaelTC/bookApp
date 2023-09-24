@@ -1,6 +1,7 @@
 #!/bin/bash 
 
 git checkout main
+git pull
 
 docker compose build
 docker tag booksapp-web:latest caeltruco/booksapp-web:latest
