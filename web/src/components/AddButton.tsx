@@ -1,4 +1,3 @@
-"use client"
 
 import {Add} from "@mui/icons-material";
 import { Button, ThemeProvider } from "@mui/material";

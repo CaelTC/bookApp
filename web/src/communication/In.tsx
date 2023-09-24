@@ -6,12 +6,9 @@ export function serverDecoder(serverMsg: AxiosResponse): Promise<number> {
     switch (serverMsg.data[1].action) {
     case "add":
       resolve( serverMsg.data[2].id);
-    case "modifiedTitle":
-      resolve(serverMsg.data[2].id);
-    case "modifiedYear":
-      resolve(serverMsg.data[2].id);
-    case "modifiedLocation":
-      resolve(serverMsg.data[2].id)
+    case "bookUpdated":
+      console.log(serverMsg.data[2].id)
+        resolve(serverMsg.data[2].id);
     case "delete":
       resolve( serverMsg.data[2].id);
     case "failed":

@@ -1,58 +1,88 @@
-"use client";
-
-import { Card, CardContent, Typography, CardActions, Collapse, Switch, FormControlLabel } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Typography,
+  CardActions,
+  Collapse,
+  Switch,
+  FormControlLabel,
+} from "@mui/material";
 import DeleteButton from "./DeleteButton";
 import { useState } from "react";
-import { BookField } from "../models/Books";
+import { EditButton } from "./EditButton";
+import { Book } from "../models/Books";
+import { EditForm } from "./EditForm";
+
 type BookProps = {
-  title: string;
-  year: number;
-  id: number;
-  isInTheHouse: boolean;
-  owner: string;
+  book: Book;
   deleteBook: (id: number) => void;
-  updateBook: (fieldToModify: BookField, id: number, data: string|number|boolean ) => void;
+  updateBook: (bookToUpdate: Book) => void;
 };
 export function BookCard(props: BookProps) {
-  const { title, year, id, isInTheHouse, owner,  deleteBook, updateBook} = props;
+  const { book, deleteBook, updateBook } = props;
   const [expanded, setExpended] = useState<boolean>(false);
   const handleExpandClick = () => {
     setExpended(!expanded);
   };
-  const [isInTheCrackHouse, setIsIn] = useState<boolean>(isInTheHouse)
+  const [isInTheCrackHouse, setIsIn] = useState<boolean>(book.isInTheHouse)
+  const [isEditing, setEdition] = useState<boolean>(false);
+  const handleOpenEdition = () => {
+    setEdition(true);
+  };
+  const handleCloseEdition = () => {
+    setEdition(false);
+  };
   const handleSwitchChange = () => {
-      setIsIn(!isInTheCrackHouse)
-      updateBook(BookField.isInTheHouse, id, !isInTheCrackHouse);
-  }
-  const location = isInTheHouse ? "In the house" : "Elsewhere";
-  return (
+    const updatedBook: Book = {
+      id: book.id,
+      title: book.title,
+      year: book.year,
+      owner: book.owner,
+      isInTheHouse: !isInTheCrackHouse,
+    };
+
+    setIsIn(!isInTheCrackHouse);
+    updateBook(updatedBook);
+  };  
+    
+    return (
     <Card
       sx={{
         position: "relative",
-        minWidth: "350px",
+        width: "340px",
         display: "flex",
-        flexDirection: "column"
+        flexDirection: "column",
+        flexWrap: "wrap",
       }}
-    >
-      <DeleteButton handleDelete={() => deleteBook(id)} />
-      <CardActions  onClick={() => handleExpandClick()}>
-        <CardContent sx={{alignSelf: "flex-start"}} >
-          <Typography   variant="h5">
-            {title}
-          </Typography>
-          <Typography  variant="body2">
-            {year}
-          </Typography>
+    > {isEditing ?  <EditForm currentBook={book} sendUpdate={updateBook} closeEdition={handleCloseEdition}/> :
+      <>
+      <EditButton openEdition={handleOpenEdition}></EditButton>
+      <DeleteButton handleDelete={() => deleteBook(book.id)} />
+      <CardActions onClick={() => handleExpandClick()}>
+        <CardContent sx={{ alignSelf: "flex-start" }}>
+          <Typography variant="h5">{book.title}</Typography>
+          <Typography variant="body2">{book.year}</Typography>
         </CardContent>
       </CardActions>
-        <CardContent sx={{alignSelf: "flex-start"}}>
-          <Collapse in={expanded}>
-          
-          <FormControlLabel label="Is in the house" control={<Switch checked={isInTheCrackHouse} onChange={handleSwitchChange}/>}/>
+      <CardContent sx={{ alignSelf: "flex-start" }}>
+        <Collapse in={expanded}>
+          <FormControlLabel
+            label="Is in the house"
+            control={
+              <Switch
+                checked={isInTheCrackHouse}
+                onChange={handleSwitchChange}
+              />
+            }
+          />
 
-          <Typography variant="body2" sx={{fontSize: "0.8rem"}}>Owner {owner}</Typography>
-          </Collapse>
-        </CardContent>
+          <Typography variant="body2" sx={{ fontSize: "0.8rem" }}>
+            Owner {book.owner}
+          </Typography>
+        </Collapse>
+
+        
+      </CardContent></>}
     </Card>
   );
 }

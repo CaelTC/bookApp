@@ -1,4 +1,3 @@
-"use client";
 
 import {
   TextField,
@@ -12,20 +11,14 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import Moment from "moment";
+import {BookFormValues} from "../models/Forms"
 import { NewBook } from "../models/Books";
 import { ErrorMessage, Form, Formik } from "formik";
-import { DatePicker } from "@mui/x-date-pickers";
+import { DatePicker, LocalizationProvider  } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import AddButton from "./AddButton";
 import { useState } from "react";
 
-type FormValues = {
-  title: string;
-  year: Moment.Moment;
-  isInTheHouse: boolean;
-  owner: string;
-};
 
 type BookFormProps = {
   addBook: (values: NewBook) => void;
@@ -40,7 +33,7 @@ function BookForm({ addBook }: BookFormProps) {
   const handleAddDialogOpen = () => {
     setOpen(true);
   };
-  const handleSubmit = (values: FormValues) => {
+  const handleSubmit = (values: BookFormValues) => {
     const bookData: NewBook = {
       title: values.title,
       year: values.year.toDate().getFullYear(),

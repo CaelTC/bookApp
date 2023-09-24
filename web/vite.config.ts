@@ -14,7 +14,6 @@ export default defineConfig(({ command, mode, ssrBuild }) => {
    { return {
     plugins: [react()],
     server : {
-      port: 5173,
       proxy: {
       '/books': 'http://localhost:5000',
       '/add': 'http://localhost:5000',

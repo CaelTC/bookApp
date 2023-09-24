@@ -37,6 +37,7 @@ def get_books():
 def get_book(id):
        book = Book.query.get(id)
        book_json = book_to_json(book)
+       print(jsonify(book_json))
        return jsonify(book_json)
 
 @app.route("/add", methods=["POST"])
@@ -51,26 +52,19 @@ def add_book():
        db.session.commit()
        return jsonify([{'tag': 'MSG'}, {'action': 'add'}, {'id': new_book.id}]), 201
 
-@app.route('/update/<int:id>', methods=['PUT'])
-def update_book(id):
-       book = Book.query.get(id)
-       if book is None:
-              return jsonify([{'tag': 'MSG'},{'action': 'No user found'}]), 404
-       
+@app.route('/update', methods=['PUT'])
+def update_book():
        data = request.get_json()
-       if 'newTitle' in data :
-              book.title = data['newTitle']
-              db.session.commit()
-              return jsonify([{'tag': 'MSG'},{'action': 'modifiedTitle'},{'id': id}])
-       if 'newYear' in data :
-              book.year = data['newYear']
-              db.session.commit()
-              return jsonify([{'tag': 'MSG'},{'action': 'modifiedYear'},{'id': id}])
-       if 'newLocation' in data :
-              book.isInTheHouse = data['newLocation']
-              db.session.commit()
-              return jsonify([{'tag': 'MSG'},{'action': 'modifiedLocation'},{'id': id}])      
-      
+       book = Book.query.get(data['id'])
+       if book is None:
+              return jsonify([{'tag': 'MSG'},{'action': 'No book found'}]), 404
+       
+       book.title = data['title']
+       book.year = data['year']
+       book.isinthehouse = data['isInTheHouse']
+       book.owner = data['owner']
+       db.session.commit()
+       return jsonify([{'tag': 'MSG'},{'action': 'bookUpdated'}, {'id': book.id}])
        
 @app.route('/delete/<int:id>', methods=['DELETE'])
 def delete_book(id):
@@ -83,6 +77,4 @@ def delete_book(id):
             return jsonify([{'tag': 'MSG'},{'action': 'failed'}])
        
 if __name__ == '__main__':
-    with app.app_context():
-           db.create_all()
     app.run()
