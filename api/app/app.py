@@ -24,6 +24,7 @@ class Book(db.Model):
             title = db.Column(db.String)
             year= db.Column(db.Integer)
             owner= db.Column(db.String)
+            lender= db.Column(db.String)
 
                 
 
@@ -47,7 +48,7 @@ def add_book():
        year = data['year']
        isInTheHouse = data['isInTheHouse']
        owner = data['owner']
-       new_book = Book(title=title, year=year, isinthehouse = isInTheHouse, owner= owner)
+       new_book = Book(title=title, year=year, isinthehouse = isInTheHouse, owner= owner, lender="")
        db.session.add(new_book)
        db.session.commit()
        return jsonify([{'tag': 'MSG'}, {'action': 'add'}, {'id': new_book.id}]), 201
@@ -62,6 +63,7 @@ def update_book():
        book.title = data['title']
        book.year = data['year']
        book.isinthehouse = data['isInTheHouse']
+       book.lender = data['lender']
        book.owner = data['owner']
        db.session.commit()
        return jsonify([{'tag': 'MSG'},{'action': 'bookUpdated'}, {'id': book.id}])

@@ -1,22 +1,20 @@
-
 export type Book = {
-    id : number;
-    isInTheHouse: boolean;
-    title: string;
-    year: number;
-    owner: string
-}
+  id: number;
+  bookState: BookState;
+  title: string;
+  year: number;
+  owner: string;
+  lender: string;
+};
 
 export type NewBook = {
-    isInTheHouse: boolean;
-    title: string;
-    year: number;
-    owner: string;
-}
+  isInTheHouse: boolean;
+  title: string;
+  year: number;
+  owner: string;
+};
 
-export enum BookField {
-    Title,
-    Year,
-    isInTheHouse,
-    Owner,
+export enum BookState {
+  Lent,
+  AtTheHouse,
 }

@@ -1,8 +1,7 @@
-import Moment from "moment"; 
+import Moment from "moment";
 
 export type BookFormValues = {
-    title: string;
+  title: string;
   year: Moment.Moment;
-  isInTheHouse: boolean;
   owner: string;
-}
+};

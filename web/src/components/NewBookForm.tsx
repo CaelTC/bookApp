@@ -1,24 +1,20 @@
-
 import {
   TextField,
   Button,
   Stack,
-  Switch,
   DialogContent,
   Grid,
   Dialog,
   DialogTitle,
-  FormControlLabel,
 } from "@mui/material";
 import Moment from "moment";
-import {BookFormValues} from "../models/Forms"
+import { BookFormValues } from "../models/Forms";
 import { NewBook } from "../models/Books";
 import { ErrorMessage, Form, Formik } from "formik";
-import { DatePicker, LocalizationProvider  } from "@mui/x-date-pickers";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import AddButton from "./AddButton";
 import { useState } from "react";
-
 
 type BookFormProps = {
   addBook: (values: NewBook) => void;
@@ -37,7 +33,7 @@ function BookForm({ addBook }: BookFormProps) {
     const bookData: NewBook = {
       title: values.title,
       year: values.year.toDate().getFullYear(),
-      isInTheHouse: values.isInTheHouse,
+      isInTheHouse: true,
       owner: values.owner,
     };
     addBook(bookData);
@@ -87,16 +83,6 @@ function BookForm({ addBook }: BookFormProps) {
                       onChange={(date) => formik.setFieldValue("year", date)}
                     />
                   </LocalizationProvider>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        id="isInTheHouse"
-                        value={formik.values.isInTheHouse}
-                        onChange={formik.handleChange}
-                      />
-                    }
-                    label="Is in the house"
-                  ></FormControlLabel>
                   <Button variant="outlined" onClick={handleAddDialogClose}>
                     {" "}
                     Cancel
